@@ -1,18 +1,45 @@
-import React, { useState } from "react";
-import Income from "./components/income/Income";
-import Expense from "./components/expense/Expense";
-import Target from "./components/target/Target";
+import React, { useState, useEffect } from "react";
+import Budget from "./components/budget/Budget";
+import Balance from "./components/balance/Balance";
+import Saving from "./components/saving/Saving";
+import { BudgetType } from "./types/budget";
 
 function App() {
-  const [income, setIncome] = useState(0);
-  const [expense, setExpense] = useState(0);
-  const [target, setTarget] = useState(0);
+  const [incomes, setIncomes] = useState<BudgetType[]>([]);
+  const [expenses, setExpenses] = useState<BudgetType[]>([]);
+  const [balance, setBalance] = useState(0);
+  const [saving, setSaving] = useState(0);
+
+  useEffect(() => {
+    const totalIncome = incomes.reduce((acc, curr) => acc + curr.amount, 0);
+    const totalExpense = expenses.reduce((acc, curr) => acc + curr.amount, 0);
+    setBalance(totalIncome - totalExpense - saving);
+  });
+
+  useEffect(() => {
+    localStorage.setItem("incomes", JSON.stringify(incomes));
+  }, [incomes]);
+
+  useEffect(() => {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [expenses]);
 
   return (
     <div className="App">
-      <Income income={income} setIncome={setIncome} />
-      <Expense expense={expense} setExpense={setExpense} />
-      <Target target={target} setTarget={setTarget} />
+      <Budget
+        option="Income"
+        list={incomes}
+        setList={setIncomes}
+        balance={balance}
+      />
+      <Budget
+        option="Expense"
+        list={expenses}
+        setList={setExpenses}
+        balance={balance}
+      />
+      <Balance balance={balance} setSaving={setSaving} />
+      <Saving saving={saving} />
     </div>
   );
 }
