@@ -5,8 +5,10 @@ import Saving from "./components/saving/Saving";
 import { BudgetType } from "./types/budget";
 
 function App() {
-  const [incomes, setIncomes] = useState<BudgetType[]>([]);
-  const [expenses, setExpenses] = useState<BudgetType[]>([]);
+  const incomeList = JSON.parse(localStorage.getItem("incomes") || "[]");
+  const expenseList = JSON.parse(localStorage.getItem("expenses") || "[]");
+  const [incomes, setIncomes] = useState<BudgetType[]>(incomeList);
+  const [expenses, setExpenses] = useState<BudgetType[]>(expenseList);
   const [balance, setBalance] = useState(0);
   const [saving, setSaving] = useState(0);
 

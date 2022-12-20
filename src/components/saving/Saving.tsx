@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SavingProps } from "../../types/saving";
 
 const Saving = ({ saving }: SavingProps) => {
-  const [target, setTarget] = useState(0);
+  const targetValue = JSON.parse(localStorage.getItem("target") || "0");
+  const [target, setTarget] = useState(targetValue);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
+  useEffect(() => {
+    localStorage.setItem("target", JSON.stringify(target));
+  }, [target]);
   return (
     <div>
       <p>Current saving: {saving}</p>
