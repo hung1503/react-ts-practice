@@ -4,6 +4,7 @@ import { BalanceProps } from "../../types/balance";
 const Balance = ({ balance, setSaving }: BalanceProps) => {
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState("");
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (amount > balance) {
@@ -14,6 +15,7 @@ const Balance = ({ balance, setSaving }: BalanceProps) => {
     }
     setSaving((prev) => prev + amount);
   };
+
   return (
     <div>
       <p>Current balance: {balance}</p>

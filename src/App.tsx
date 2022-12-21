@@ -7,10 +7,11 @@ import { BudgetType } from "./types/budget";
 function App() {
   const incomeList = JSON.parse(localStorage.getItem("incomes") || "[]");
   const expenseList = JSON.parse(localStorage.getItem("expenses") || "[]");
+  const savingValue = JSON.parse(localStorage.getItem("saving") || "0");
   const [incomes, setIncomes] = useState<BudgetType[]>(incomeList);
   const [expenses, setExpenses] = useState<BudgetType[]>(expenseList);
   const [balance, setBalance] = useState(0);
-  const [saving, setSaving] = useState(0);
+  const [saving, setSaving] = useState(savingValue);
 
   useEffect(() => {
     const totalIncome = incomes.reduce((acc, curr) => acc + curr.amount, 0);
@@ -25,6 +26,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
   }, [expenses]);
+
+  useEffect(() => {
+    localStorage.setItem("saving", JSON.stringify(saving));
+  }, [saving]);
 
   return (
     <div className="App">
@@ -41,7 +46,7 @@ function App() {
         balance={balance}
       />
       <Balance balance={balance} setSaving={setSaving} />
-      <Saving saving={saving} />
+      <Saving saving={saving} setBalance={setBalance} setSaving={setSaving} />
     </div>
   );
 }

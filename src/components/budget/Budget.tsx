@@ -7,8 +7,15 @@ const Budget = ({ option, list, setList, balance }: BudgetProps) => {
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (source === "Open to see") {
+      setError("Please select a source");
+      return;
+    } else {
+      setError("");
+    }
     const newItem: BudgetType = {
       id: uuid4(),
       source,
@@ -28,21 +35,42 @@ const Budget = ({ option, list, setList, balance }: BudgetProps) => {
     setAmount(0);
     setDate("");
   };
+
   return (
     <div>
       <h2>{option}</h2>
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
           <label htmlFor="src">{option} source</label>
-
-          <input
-            type="text"
-            required
-            name="src"
-            id="src"
-            value={source}
-            onChange={({ target }) => setSource(target.value)}
-          />
+          {option === "Income" && (
+            <select
+              name="src"
+              id="src"
+              value={source}
+              onChange={({ target }) => setSource(target.value)}
+            >
+              <option value="Open to see">Open to see</option>
+              <option value="Salary">Salary</option>
+              <option value="Bonus">Bonus</option>
+              <option value="Other">Other</option>
+            </select>
+          )}
+          {option === "Expense" && (
+            <select
+              name="src"
+              id="src"
+              value={source}
+              onChange={({ target }) => setSource(target.value)}
+            >
+              <option value="Open to see">Open to see</option>
+              <option value="Water bill">Water bill</option>
+              <option value="Electricity bill">Electricity bill</option>
+              <option value="Rent">Rent</option>
+              <option value="Food">Food</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Other">Other</option>
+            </select>
+          )}
         </div>
         <div>
           <label htmlFor="amount">Amount of {option}</label>
