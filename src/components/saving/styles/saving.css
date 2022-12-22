@@ -1,0 +1,48 @@
+.saving {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+.saving-value-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.saving-value {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #000;
+  margin: 0px 10px 20px;
+  padding: 10px;
+  border-radius: 20px;
+  width: 200px;
+}
+
+.savingFormContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px;
+}
+
+.savingForm {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.savingForm label {
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.savingForm input {
+  text-align: center;
+}
+
+.savingForm button {
+  margin-top: 15px;
+}

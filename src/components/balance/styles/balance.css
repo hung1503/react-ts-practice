@@ -1,0 +1,48 @@
+.balance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.balance-value-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.balance-value {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #000;
+  margin: 0px 10px 20px;
+  border-radius: 20px;
+  padding: 10px;
+  width: 200px;
+}
+
+.balanceFormContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 500px;
+}
+
+.balanceFormContainer form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.balanceFormContainer label {
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.balanceFormContainer input {
+  text-align: center;
+}
+
+.balanceFormContainer button {
+  margin-top: 15px;
+}

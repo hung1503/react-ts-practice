@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SavingProps } from "../../types/saving";
+import "./styles/saving.css";
 
 const Saving = ({ saving, setBalance, setSaving }: SavingProps) => {
   const targetValue = JSON.parse(localStorage.getItem("target") || "0");
@@ -23,24 +24,30 @@ const Saving = ({ saving, setBalance, setSaving }: SavingProps) => {
   };
 
   return (
-    <div>
-      <p>Current saving: {saving}</p>
-      <form onSubmit={(e) => transferBalance(e)}>
-        <label htmlFor="savingToBalance">Transfer back to the balance</label>
-        <input
-          type="number"
-          id="savingToBalance"
-          name="savingToBalance"
-          value={transferBack}
-          onChange={({ target }) => setTransferBack(+target.value)}
-        />
-        <button type="submit">Transfer</button>
-      </form>
-      <p>Current target: {target}</p>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <div className="target">
+    <div className="saving">
+      <div className="saving-value-container">
+        <p className="saving-value">Current saving: {saving}</p>
+        <p className="saving-value">Current target: {target}</p>
+      </div>
+      <label htmlFor="progress">{(saving / target) * 100 || 0}%</label>
+      <progress value={saving} max={target} />
+      <div className="savingFormContainer">
+        <form onSubmit={(e) => transferBalance(e)} className="savingForm">
+          <label htmlFor="savingToBalance">Transfer back to the balance</label>
+          <input
+            className="input"
+            type="number"
+            id="savingToBalance"
+            name="savingToBalance"
+            value={transferBack}
+            onChange={({ target }) => setTransferBack(+target.value)}
+          />
+          <button type="submit">Transfer</button>
+        </form>
+        <form onSubmit={(e) => handleSubmit(e)} className="savingForm">
           <label htmlFor="target">Set target</label>
           <input
+            className="input"
             type="number"
             id="target"
             name="target"
@@ -48,10 +55,8 @@ const Saving = ({ saving, setBalance, setSaving }: SavingProps) => {
             onChange={({ target }) => setTarget(+target.value)}
           />
           <button type="submit">Reset</button>
-        </div>
-      </form>
-      <label htmlFor="progress">{(saving / target) * 100 || 0}%</label>
-      <progress value={saving} max={target} />
+        </form>
+      </div>
     </div>
   );
 };

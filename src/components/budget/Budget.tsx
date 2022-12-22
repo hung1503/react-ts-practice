@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { BudgetProps, BudgetType } from "../../types/budget";
 import BudgetForm from "./BudgetForm";
+import "./styles/budget.css";
 
 const Budget = ({ option, list, setList, balance }: BudgetProps) => {
   const [item, setItem] = useState<BudgetType | undefined>(undefined);
@@ -23,35 +24,35 @@ const Budget = ({ option, list, setList, balance }: BudgetProps) => {
         change={change}
         setChange={setChange}
       />
-      <ul>
+      <div className="displayResult">
         {list.map((item) => {
           return (
-            <li key={item.id}>
-              {item.source}: {item.amount} on {item.date}
-              <ButtonGroup
-                size="small"
-                variant="contained"
-                aria-label="outlined primary button group"
-              >
-                <Button
+            <div className="singleResult" key={item.id}>
+              <div>
+                {item.source}: {item.amount} on {item.date}
+              </div>
+              <div>
+                <button
+                  className="filterBtn"
                   onClick={() => {
                     setItem(item);
                     setChange("modify");
                   }}
                 >
-                  Edit
-                </Button>
-                <Button
+                  <EditIcon />
+                </button>
+                <button
+                  className="filterBtn"
                   onClick={() => handleDelete(item.id)}
                   disabled={option === "Income" && balance - item.amount < 0}
                 >
-                  Delete
-                </Button>
-              </ButtonGroup>
-            </li>
+                  <DeleteIcon />
+                </button>
+              </div>
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 };
