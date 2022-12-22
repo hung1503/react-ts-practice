@@ -18,7 +18,7 @@ function App() {
     const totalIncome = incomes.reduce((acc, curr) => acc + curr.amount, 0);
     const totalExpense = expenses.reduce((acc, curr) => acc + curr.amount, 0);
     setBalance(totalIncome - totalExpense - saving);
-  });
+  }, [incomes, expenses, saving]);
 
   useEffect(() => {
     localStorage.setItem("incomes", JSON.stringify(incomes));
