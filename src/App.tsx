@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
+
 import Budget from "./components/budget/Budget";
 import Balance from "./components/balance/Balance";
 import Saving from "./components/saving/Saving";
@@ -32,22 +35,40 @@ function App() {
   }, [saving]);
 
   return (
-    <div className="App">
-      <Budget
-        option="Income"
-        list={incomes}
-        setList={setIncomes}
-        balance={balance}
-      />
-      <Budget
-        option="Expense"
-        list={expenses}
-        setList={setExpenses}
-        balance={balance}
-      />
-      <Balance balance={balance} setSaving={setSaving} />
-      <Saving saving={saving} setBalance={setBalance} setSaving={setSaving} />
-    </div>
+    <Box
+      sx={{
+        margin: 5,
+      }}
+    >
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <Budget
+            option="Income"
+            list={incomes}
+            setList={setIncomes}
+            balance={balance}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <Budget
+            option="Expense"
+            list={expenses}
+            setList={setExpenses}
+            balance={balance}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <Saving
+            saving={saving}
+            setBalance={setBalance}
+            setSaving={setSaving}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <Balance balance={balance} setSaving={setSaving} />
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
 

@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+
 import { BudgetProps, BudgetType } from "../../types/budget";
 import BudgetForm from "./BudgetForm";
 
@@ -25,20 +28,26 @@ const Budget = ({ option, list, setList, balance }: BudgetProps) => {
           return (
             <li key={item.id}>
               {item.source}: {item.amount} on {item.date}
-              <button
-                onClick={() => {
-                  setItem(item);
-                  setChange("modify");
-                }}
+              <ButtonGroup
+                size="small"
+                variant="contained"
+                aria-label="outlined primary button group"
               >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(item.id)}
-                disabled={option === "Income" && balance - item.amount < 0}
-              >
-                Delete
-              </button>
+                <Button
+                  onClick={() => {
+                    setItem(item);
+                    setChange("modify");
+                  }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => handleDelete(item.id)}
+                  disabled={option === "Income" && balance - item.amount < 0}
+                >
+                  Delete
+                </Button>
+              </ButtonGroup>
             </li>
           );
         })}

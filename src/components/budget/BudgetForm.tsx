@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { TextField, Autocomplete, Button, Box } from "@mui/material";
+
 import { BudgetFormProps, BudgetType } from "../../types/budget";
 import uuid4 from "uuid4";
 
@@ -14,6 +16,21 @@ const BudgetForm = ({
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState("");
   const [error, setError] = useState("");
+
+  const incomeOptions = [
+    { value: "Salary", label: "Salary" },
+    { value: "Bonus", label: "Bonus" },
+    { value: "Other", label: "Other" },
+  ];
+
+  const expenseOptions = [
+    { value: "Water bill", label: "Water bill" },
+    { value: "Electricity bill", label: "Electricity bill" },
+    { value: "Internet bill", label: "Internet bill" },
+    { value: "Rent", label: "Rent" },
+    { value: "Food", label: "Food" },
+    { value: "Other", label: "Other" },
+  ];
 
   useEffect(() => {
     if (change === "modify" && item) {
@@ -71,40 +88,41 @@ const BudgetForm = ({
   };
 
   return (
-    <div>
+    <Box>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div>
+        <Box>
           <label htmlFor="src">{option} source</label>
           {option === "Income" && (
-            <select
-              name="src"
+            <Autocomplete
               id="src"
-              value={source}
-              onChange={({ target }) => setSource(target.value)}
-            >
-              <option value="Open to see">Open to see</option>
-              <option value="Salary">Salary</option>
-              <option value="Bonus">Bonus</option>
-              <option value="Other">Other</option>
-            </select>
+              options={incomeOptions}
+              sx={{ width: 300 }}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              onChange={(event, value) => {
+                if (!value) return;
+                setSource(value.value);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
           )}
           {option === "Expense" && (
-            <select
-              name="src"
+            <Autocomplete
               id="src"
-              value={source}
-              onChange={({ target }) => setSource(target.value)}
-            >
-              <option value="Open to see">Open to see</option>
-              <option value="Water bill">Water bill</option>
-              <option value="Electricity bill">Electricity bill</option>
-              <option value="Rent">Rent</option>
-              <option value="Food">Food</option>
-              <option value="Transportation">Transportation</option>
-              <option value="Other">Other</option>
-            </select>
+              options={expenseOptions}
+              sx={{ width: 300 }}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              onChange={(event, value) => {
+                if (!value) return;
+                setSource(value.value);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
           )}
-        </div>
+        </Box>
         <div>
           <label htmlFor="amount">Amount of {option}</label>
           <input
@@ -127,10 +145,12 @@ const BudgetForm = ({
             onChange={({ target }) => setDate(target.value)}
           />
         </div>
-        <button type="submit">Add {option}</button>
+        <Button size="small" variant="outlined" type="submit">
+          Add {option}
+        </Button>
       </form>
       {error && <p>{error}</p>}
-    </div>
+    </Box>
   );
 };
 
